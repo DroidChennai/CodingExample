@@ -3,11 +3,17 @@ package com.demo;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.runner.AndroidJUnit4;
+import android.support.v7.widget.RecyclerView;
 import android.test.ActivityInstrumentationTestCase2;
+
+import com.demo.model.Row;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -22,6 +28,10 @@ import static com.demo.TestUtils.withRecyclerView;
 
 @RunWith(AndroidJUnit4.class)
 public class RecyclerViewTest extends ActivityInstrumentationTestCase2<Homescreen> {
+
+//    @Rule
+//    public ActivityTestRule<Homescreen> mActivityRule =
+//            new ActivityTestRule<>(Homescreen.class);
 
     public RecyclerViewTest() {
         super(Homescreen.class);
@@ -67,5 +77,34 @@ public class RecyclerViewTest extends ActivityInstrumentationTestCase2<Homescree
     @Test
     public void testRecyclerviewScrolltoposition() {
         onView(withId(R.id.itemsListview)).perform(RecyclerViewActions.scrollToPosition(4));
+    }
+
+    @Test
+    public void testRowItem() {
+
+        final RecyclerView recyclerView = getActivity().findViewById(R.id.itemsListview);
+
+        final List<Row> mItenew = new ArrayList<>();
+
+        Row mRow = new Row();
+        mRow.setTitle("Fruits");
+        mRow.setDescription("An apple is a sweet, edible fruit produced by an apple tree. Apple trees are cultivated worldwide");
+        mRow.setImageHref("https://cdn1.medicalnewstoday.com/content/images/headlines/319/319884/green-and-red-apples.jpg");
+        mItenew.add(mRow);
+
+        try {
+
+            runTestOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    recyclerView.setAdapter(new com.demo.adapter.ListAdapter(getActivity(), mItenew));
+                }
+            });
+
+            Thread.sleep(5000);
+
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
     }
 }
