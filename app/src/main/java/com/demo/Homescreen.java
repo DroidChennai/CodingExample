@@ -11,9 +11,9 @@ import android.view.View;
 
 import com.demo.adapter.ListAdapter;
 import com.demo.listeners.ApiCallback;
-import com.demo.listeners.AppConstants;
 import com.demo.model.Row;
 import com.demo.restapicall.ApiClient;
+import com.demo.utils.AppConstants;
 import com.demo.utils.ConnectionManager;
 import com.demo.utils.ToastUtils;
 
@@ -100,14 +100,14 @@ public class Homescreen extends AppCompatActivity implements SwipeRefreshLayout.
     }
 
     @Override
-    public void notifylist(List<Row> _data) {
+    public void notifySuccess(List<Row> _data) {
 
         // Backup data, if device went offline
         mListData = _data;
 
         // Check the api data and set data into adapter
         if (null != _data) {
-            mItemsAdapter = new ListAdapter(mContext,_data);
+            mItemsAdapter = new ListAdapter(mContext, _data);
             mListView.setAdapter(mItemsAdapter);
             mListView.setVisibility(View.VISIBLE);
         } else {
@@ -117,5 +117,12 @@ public class Homescreen extends AppCompatActivity implements SwipeRefreshLayout.
 
         mSwipeContainer.setRefreshing(false);
 
+    }
+
+    @Override
+    public void notifyError() {
+        ToastUtils.showToast(mContext, getString(R.string.no_data_available));
+        mListView.setVisibility(View.GONE);
+        mSwipeContainer.setRefreshing(false);
     }
 }

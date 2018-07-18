@@ -18,7 +18,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.demo.listeners.AppConstants.URL;
+import static com.demo.utils.AppConstants.URL;
 
 /**
  * Created by vijayaraj_s on 18/07/18.
@@ -68,10 +68,10 @@ public class ApiClient {
 
                 List<Row> mData = response.body().getRows();
 
-                if (null != apiCallback && null != Homescreen.getlistener() && !mData.isEmpty()) {
-                    Homescreen.getlistener().notifylist(mData);
+                if (null != apiCallback && !mData.isEmpty()) {
+                    apiCallback.notifySuccess(mData);
                 } else {
-                    Homescreen.getlistener().notifylist(null);
+                    apiCallback.notifyError();
                 }
             }
 
@@ -79,7 +79,7 @@ public class ApiClient {
             public void onFailure(Call<DataModel> call, Throwable t) {
                 // Log error here since request failed
                 Log.e(TAG, t.toString());
-                Homescreen.getlistener().notifylist(null);
+                apiCallback.notifyError();
             }
         });
     }

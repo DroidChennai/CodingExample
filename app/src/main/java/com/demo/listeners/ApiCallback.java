@@ -11,5 +11,8 @@ import java.util.List;
 
 public interface ApiCallback {
 
-    void notifylist(List<Row> _data);
+    void notifySuccess(List<Row> _data);
+
+    void notifyError();
+
 }
