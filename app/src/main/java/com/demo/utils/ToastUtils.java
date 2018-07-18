@@ -1,0 +1,30 @@
+package com.demo.utils;
+
+import android.content.Context;
+import android.widget.Toast;
+
+/**
+ * Created by vijayaraj_s on 18/07/18.
+ */
+
+public class ToastUtils {
+
+    /**
+     * Displaying Toast Message
+     *
+     * @param _ctx
+     * @param _message
+     */
+    public static void showToast(Context _ctx, String _message) {
+
+        Toast mToast = null;
+
+        if (null != mToast) {
+            mToast.cancel();
+        }
+
+        mToast = Toast.makeText(_ctx, _message, Toast.LENGTH_LONG);
+        mToast.show();
+
+    }
+}
