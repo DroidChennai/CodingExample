@@ -3,13 +3,16 @@ package com.demo.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by vijayaraj_s on 18/07/18.
  */
 
-public class DataModel {
+public class DataModel implements Serializable {
+
+    static final long serialVersionUID = 1L;
 
     @SerializedName("title")
     @Expose
@@ -45,5 +48,13 @@ public class DataModel {
      */
     public void setRows(List<Row> rows) {
         this.rows = rows;
+    }
+
+    @Override
+    public String toString() {
+        return "DataModel{" +
+                "title='" + title + '\'' +
+                ", rows=" + rows +
+                '}';
     }
 }

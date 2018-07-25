@@ -2,7 +2,6 @@ package com.demo.restapicall;
 
 import android.util.Log;
 
-import com.demo.Homescreen;
 import com.demo.listeners.ApiCallback;
 import com.demo.listeners.ApiInterface;
 import com.demo.model.DataModel;

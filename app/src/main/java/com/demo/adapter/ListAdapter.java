@@ -8,12 +8,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.demo.R;
 import com.demo.model.Row;
 import com.demo.utils.ToastUtils;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by vijayaraj_s on 18/07/18.
@@ -24,30 +28,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     // Variable Declaration
     private List<Row> mItemsList;
     private Context mContext;
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
-
-        // variable declaration
-        public TextView mTitle;
-        public TextView mDescription;
-        public ImageView mItemImage;
-
-        public ViewHolder(View view) {
-            super(view);
-
-            // initializing variables
-            mTitle = view.findViewById(R.id.text_title);
-            mDescription = view.findViewById(R.id.text_description);
-            mItemImage = view.findViewById(R.id.item_image);
-
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ToastUtils.showToast(mContext, "Item " + getAdapterPosition() + " clicked");
-                }
-            });
-        }
-    }
 
     /**
      * set data for adapter
@@ -91,11 +71,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         // set description value
         holder.mDescription.setText(mItems.getDescription());
 
-        // Picasso library used to load image url into imageview efficiently
-        Picasso.get()
+        // Glide library used to load image url into imageview efficiently
+        Glide.with(mContext)
                 .load(mItems.getImageHref())
                 .placeholder(R.mipmap.ic_launcher)
                 .error(R.mipmap.ic_launcher)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.mItemImage);
     }
 
@@ -105,5 +86,32 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     @Override
     public int getItemCount() {
         return mItemsList.size();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+
+        // variable declaration
+
+        @BindView(R.id.text_title)
+        public TextView mTitle;
+
+        @BindView(R.id.text_description)
+        public TextView mDescription;
+
+        @BindView(R.id.item_image)
+        public ImageView mItemImage;
+
+        public ViewHolder(View view) {
+            super(view);
+
+            ButterKnife.bind(this, view);
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ToastUtils.showToast(mContext, "Item " + getAdapterPosition() + " clicked");
+                }
+            });
+        }
     }
 }

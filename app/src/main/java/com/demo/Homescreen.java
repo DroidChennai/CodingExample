@@ -19,6 +19,9 @@ import com.demo.utils.ToastUtils;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by vijayaraj_s on 18/07/18.
  */
@@ -28,32 +31,39 @@ public class Homescreen extends AppCompatActivity implements SwipeRefreshLayout.
 
     // Member variable decalration
     private static final String TAG = Homescreen.class.getSimpleName();
-
-    private RecyclerView mListView;
-    private SwipeRefreshLayout mSwipeContainer;
+    public static ApiCallback mApiCallback;
+    @BindView(R.id.itemsListview)
+    RecyclerView mListView;
+    @BindView(R.id.swiperefresh)
+    SwipeRefreshLayout mSwipeContainer;
     private Context mContext;
     private ListAdapter mItemsAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private List<Row> mListData;
 
-    public static ApiCallback mApiCallback;
+    /**
+     * @return Interface instance
+     */
+    public static ApiCallback getlistener() {
+        return mApiCallback;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homescreen);
 
+        ButterKnife.bind(this);
+
         // Initializing member variables
         mContext = this;
 
         mApiCallback = this;
 
-        mListView = findViewById(R.id.itemsListview);
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
         mListView.setLayoutManager(mLayoutManager);
         mListView.setItemAnimator(new DefaultItemAnimator());
 
-        mSwipeContainer = findViewById(R.id.swiperefresh);
         mSwipeContainer.setColorSchemeResources(
                 android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light);
@@ -90,13 +100,6 @@ public class Homescreen extends AppCompatActivity implements SwipeRefreshLayout.
             if (null == mListData)
                 mListView.setVisibility(View.GONE);
         }
-    }
-
-    /**
-     * @return Interface instance
-     */
-    public static ApiCallback getlistener() {
-        return mApiCallback;
     }
 
     @Override

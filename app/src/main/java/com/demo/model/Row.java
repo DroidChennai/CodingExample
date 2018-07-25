@@ -3,11 +3,15 @@ package com.demo.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by vijayaraj_s on 18/07/18.
  */
 
-public class Row {
+public class Row implements Serializable {
+
+    static final long serialVersionUID = 1L;
 
     @SerializedName("title")
     @Expose
@@ -61,5 +65,14 @@ public class Row {
      */
     public void setImageHref(String imageHref) {
         this.imageHref = imageHref;
+    }
+
+    @Override
+    public String toString() {
+        return "Row{" +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", imageHref='" + imageHref + '\'' +
+                '}';
     }
 }

@@ -24,6 +24,11 @@ public class TestUtils {
         return new ActionOnItemViewAtPositionViewAction(position, viewId, viewAction);
     }
 
+    public static RecyclerViewMatcher withRecyclerView(final int recyclerViewId) {
+
+        return new RecyclerViewMatcher(recyclerViewId);
+    }
+
     private static final class ActionOnItemViewAtPositionViewAction<VH extends RecyclerView
             .ViewHolder>
             implements
@@ -99,12 +104,6 @@ public class TestUtils {
             RecyclerView recyclerView = (RecyclerView) view;
             recyclerView.scrollToPosition(this.position);
         }
-    }
-
-
-    public static RecyclerViewMatcher withRecyclerView(final int recyclerViewId) {
-
-        return new RecyclerViewMatcher(recyclerViewId);
     }
 
 }
