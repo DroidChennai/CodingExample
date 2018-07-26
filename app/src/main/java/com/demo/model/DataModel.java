@@ -12,7 +12,7 @@ import java.util.List;
 
 public class DataModel implements Serializable {
 
-    static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -3828814959960134587L;
 
     @SerializedName("title")
     @Expose

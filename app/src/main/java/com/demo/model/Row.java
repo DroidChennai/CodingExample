@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 public class Row implements Serializable {
 
-    static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1073517883937546028L;
 
     @SerializedName("title")
     @Expose
